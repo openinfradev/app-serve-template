@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: APPNAME
+  name: APPNAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: APPNAME
+  template:
+    metadata:
+      labels:
+        app: APPNAME
+    spec:
+      containers:
+      - image: IMAGEURL
+        name: APPNAME
+        command:
+        - java
+#        - -Dspring.profiles.active=mysql
+        - -jar
+        - /usr/src/myapp/JARFILENAME
+        ports:
+        - containerPort: PORTNUM
+        resources: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: APPNAME
+  name: APPNAME
+spec:
+  ports:
+  - name: web
+    port: PORTNUM
+    protocol: TCP
+    targetPort: PORTNUM
+  selector:
+    app: APPNAME
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
