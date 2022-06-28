@@ -29,7 +29,7 @@ spec:
         name: APPNAME
         command:
         - java
-#        - -Dspring.profiles.active=mysql
+        - -Dspring.profiles.active=PROFILE
         - -jar
         - /usr/src/myapp/JARFILENAME
         ports:
