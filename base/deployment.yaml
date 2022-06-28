@@ -1,13 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: APPNAME
-spec:
-  finalizers:
-  - kubernetes
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,32 +18,21 @@ spec:
       containers:
       - image: IMAGEURL
         name: APPNAME
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "2"
+          limits:
+            memory: "2Gi"
+            cpu: "2"
         command:
         - java
         - -Dspring.profiles.active=PROFILE
+        - -XX:MinRAMPercentage=50.0
+        - -XX:MaxRAMPercentage=75.0
+        - -XshowSettings:vm
         - -jar
         - /usr/src/myapp/JARFILENAME
         ports:
         - containerPort: PORTNUM
-        resources: {}
 status: {}
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    app: APPNAME
-  name: APPNAME
-spec:
-  ports:
-  - name: web
-    port: PORTNUM
-    protocol: TCP
-    targetPort: PORTNUM
-  selector:
-    app: APPNAME
-  sessionAffinity: None
-  type: LoadBalancer
-status:
-  loadBalancer: {}

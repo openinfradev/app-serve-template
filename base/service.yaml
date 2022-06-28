@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: APPNAME
+spec:
+  finalizers:
+  - kubernetes
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: APPNAME
+  name: APPNAME
+spec:
+  ports:
+  - name: web
+    port: PORTNUM
+    protocol: TCP
+    targetPort: PORTNUM
+  selector:
+    app: APPNAME
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}

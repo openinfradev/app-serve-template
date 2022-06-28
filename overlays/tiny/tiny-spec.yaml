@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: APPNAME
+  name: APPNAME
+spec:
+  template:
+    spec:
+      containers:
+      - image: IMAGEURL
+        name: APPNAME
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1"
+          limits:
+            memory: "1Gi"
+            cpu: "1"
