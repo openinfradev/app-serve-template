@@ -18,13 +18,7 @@ spec:
       containers:
       - image: IMAGEURL
         name: APPNAME
-        resources:
-          requests:
-            memory: "2Gi"
-            cpu: "2"
-          limits:
-            memory: "2Gi"
-            cpu: "2"
+        resources: {}
         command:
         - java
         - -Dspring.profiles.active=PROFILE
