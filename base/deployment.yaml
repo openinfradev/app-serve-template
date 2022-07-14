@@ -26,7 +26,7 @@ spec:
         - -XX:MaxRAMPercentage=75.0
         - -XshowSettings:vm
         - -jar
-        - /usr/src/myapp/JARFILENAME
+        - EXECUTABLE_PATH
         ports:
         - containerPort: PORTNUM
 status: {}
