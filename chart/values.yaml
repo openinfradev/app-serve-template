@@ -1,0 +1,37 @@
+name: APP_NAME
+namespace: APP_NAME
+replicas: 1
+
+image:
+  url: IMAGE_URL
+  pullPolicy: Always
+
+config:
+  profile: PROFILE
+  executablePath: EXECUTABLE_PATH
+
+podSecurityContext: {}
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: LoadBalancer
+  port: PORT_NUM
+
+#ingress:
+#  enabled: false
+#  annotations: {}
+#  hosts:
+#    - host: chart-example.local
+#      paths: []
+#  tls: []
+#    - secretName: chart-example-tls
+#      hosts:
+#        - chart-example.local
+
+resources: {}

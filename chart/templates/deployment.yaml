@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.name }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: main
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.url }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+          - containerPort: {{ .Values.services.port }}
+            protocol: TCP
+          command:
+					- java
+					- -Dspring.profiles.active={{ .Values.config.profile }}
+					- -XX:MinRAMPercentage=50.0
+					- -XX:MaxRAMPercentage=75.0
+					- -XshowSettings:vm
+					- -jar
+					- {{ .Values.config.excutablePath }} 
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
