@@ -27,12 +27,12 @@ spec:
           - containerPort: {{ .Values.service.port }}
             protocol: TCP
           command:
-					- java
-					- -Dspring.profiles.active={{ .Values.config.profile }}
-					- -XX:MinRAMPercentage=50.0
-					- -XX:MaxRAMPercentage=75.0
-					- -XshowSettings:vm
-					- -jar
-					- {{ .Values.config.excutablePath }} 
+          - java
+          - -Dspring.profiles.active={{ .Values.config.profile }}
+          - -XX:MinRAMPercentage=50.0
+          - -XX:MaxRAMPercentage=75.0
+          - -XshowSettings:vm
+          - -jar
+          - {{ .Values.config.excutablePath }} 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
