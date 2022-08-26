@@ -1,7 +1,7 @@
 resources:
-	requests:
-		memory: "4Gi"
-		cpu: "4"
-	limits:
-		memory: "4Gi"
-		cpu: "4"
+  requests:
+    memory: "4Gi"
+    cpu: "4"
+  limits:
+    memory: "4Gi"
+    cpu: "4"
