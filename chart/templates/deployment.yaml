@@ -33,6 +33,6 @@ spec:
           - -XX:MaxRAMPercentage=75.0
           - -XshowSettings:vm
           - -jar
-          - {{ .Values.config.excutablePath }} 
+          - {{ .Values.config.executablePath }} 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
