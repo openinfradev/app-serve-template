@@ -22,6 +22,7 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: PORT_NUM
+  metricsPort: 9464
 
 ingress:
   enabled: false
