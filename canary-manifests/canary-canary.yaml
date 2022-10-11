@@ -1,0 +1,51 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: petclinic-canary
+  namespace: petclinic
+spec:
+  # service mesh provider can be: kubernetes, istio, appmesh, nginx, gloo
+  provider: nginx
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: petclinic
+  ingressRef:
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    name: petclinic
+  # the maximum time in seconds for the canary deployment
+  # to make progress before rollback (default 600s)
+  progressDeadlineSeconds: 60
+  service:
+    port: 8080
+    name: petclinic
+    targetPort: web
+  analysis:
+    # schedule interval (default 60s)
+    interval: 60s
+    # max number of failed checks before rollback
+    threshold: 5
+    maxWeight: 50
+    stepWeight: 10
+    # Prometheus checks based on 
+    # http_request_duration_seconds histogram
+    metrics:
+    - name: my-request-success-rate
+      templateRef:
+        name: my-request-success-rate
+        namespace: flagger
+      # minimum req success rate (non 5xx responses)
+      # percentage (0-100)
+      thresholdRange:
+        min: 95
+      interval: 1m
+    # acceptance/load testing hooks
+    webhooks:
+      - name: load-test
+        url: http://flagger-loadtester.flagger/
+        timeout: 5s
+        metadata:
+          type: cmd
+          cmd: "hey -z 1m -q 10 -c 2 http://INGRESS_HOST:8080/"

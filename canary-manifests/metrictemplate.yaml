@@ -1,0 +1,29 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: my-request-success-rate
+  namespace: flagger
+spec:
+  provider:
+    type: prometheus
+    address: http://lma-prometheus.lma:9090
+  query: |
+    sum(
+      rate(
+        http_server_requests_count{
+          namespace="{{ namespace }}",
+          pod=~"{{ target }}-[0-9a-zA-Z]+(-[0-9a-zA-Z]+)",
+          status~"2.*"
+        }[{{ interval }}]
+      )
+    )
+    /
+    sum(
+      rate(
+        http_server_requests_count{
+          namespace="{{ namespace }}",
+          pod=~"{{ target }}-[0-9a-zA-Z]+(-[0-9a-zA-Z]+)"
+        }[{{ interval }}]
+      )
+    )
+    * 100
