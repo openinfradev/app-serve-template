@@ -1,18 +1,19 @@
+{{- if .Values.canary.enabled }}
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   labels:
-    app: petclinic
-  name: petclinic
-  namespace: lma
+    app: {{ .Values.name }}
+  name: {{ .Values.name }}
+  namespace: {{ .Values.lmaNamespace }}
 spec:
   namespaceSelector:
     matchNames:
-    - petclinic
+    - {{ .Values.namespace }}
   selector:
     matchLabels:
-      app: petclinic
+      app: {{ .Values.name }}
   podMetricsEndpoints:
   - targetPort: 9464
 ---
@@ -20,15 +21,16 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   labels:
-    app: petclinic-primary
-  name: petclinic-primary
-  namespace: lma
+    app: {{ .Values.name }}-primary
+  name: {{ .Values.name }}-primary
+  namespace: {{ .Values.lmaNamespace }}
 spec:
   namespaceSelector:
     matchNames:
-    - petclinic
+    - {{ .Values.namespace }}
   selector:
     matchLabels:
-      app: petclinic-primary
+      app: {{ .Values.name }}-primary
   podMetricsEndpoints:
   - targetPort: 9464
+{{- end }}

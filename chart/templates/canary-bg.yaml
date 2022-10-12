@@ -1,8 +1,9 @@
+{{- if .Values.canary.enabled }}
 apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
-  name: petclinic-bg
-  namespace: petclinic
+  name: {{ .Values.name }}-bg
+  namespace: {{ .Values.namespace }}
 spec:
   # service mesh provider can be: kubernetes, istio, appmesh, nginx, gloo
   provider: kubernetes
@@ -10,14 +11,14 @@ spec:
   targetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: petclinic
+    name: {{ .Values.name }}
   # the maximum time in seconds for the canary deployment
   # to make progress before rollback (default 600s)
   progressDeadlineSeconds: 60
   # HPA reference (optional)
   service:
-    port: 8080
-    name: petclinic
+    port: {{ .Values.service.port }}
+    name: {{ .Values.name }}
     targetPort: web
   analysis:
     # schedule interval (default 60s)
@@ -36,7 +37,7 @@ spec:
         # minimum req success rate (non 5xx responses)
         # percentage (0-100)
         thresholdRange:
-          min: 95
+          min: {{ .Values.canary.successThreshold }}
         interval: 1m
     # acceptance/load testing hooks
     webhooks:
@@ -45,4 +46,5 @@ spec:
         timeout: 5s
         metadata:
           type: cmd
-          cmd: "hey -z 1m -q 10 -c 2 http://petclinic-canary.petclinic:8080/"
+          cmd: "hey -z 1m -q 10 -c 2 http://{{ .Values.name }}-canary.{{ .Values.namespace }}:{{ .Values.service.port }}/"
+{{- end }}

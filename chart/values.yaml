@@ -42,3 +42,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 resources: {}
+
+canary:
+  enabled: false
+  successThreshold: 95
