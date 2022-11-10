@@ -17,6 +17,12 @@ spec:
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+{{- if .Values.persistence.enabled }}
+      volumes:
+        - name: {{ .Values.name }}-pv
+          persistentVolumeClaim:
+            claimName: {{ .Values.name }}-pvc
+{{- end }}
       containers:
         - name: main
           securityContext:
@@ -44,3 +50,8 @@ spec:
           - {{ .Values.config.executablePath }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+{{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - mountPath: {{ .Values.persistence.mountPath }}
+              name: {{ .Values.name }}-pv
+{{- end }}

@@ -46,3 +46,10 @@ resources: {}
 canary:
   enabled: false
   successThreshold: 95
+
+persistence:
+  enabled: PV_ENABLED
+  storageClass: PV_STORAGE_CLASS
+  accessMode: PV_ACCESS_MODE
+  size: PV_SIZE
+  mountPath: PV_MOUNT_PATH
