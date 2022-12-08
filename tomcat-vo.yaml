@@ -1,0 +1,13 @@
+fullnameOverride: APP_NAME
+image:
+  registry: REGISTRY
+  repository: REPOSITORY
+  tag: TAG
+persistence:
+  enabled: PV_ENABLED
+  storageClass: PV_STORAGE_CLASS
+  accessModes:
+    - PV_ACCESS_MODE
+  size: PV_SIZE
+service:
+  type: LoadBalancer
