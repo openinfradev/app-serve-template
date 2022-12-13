@@ -9,7 +9,7 @@ spec:
   type: {{ .Values.service.type }}
   ports:
   - name: web
-    port: {{ .Values.service.port }}
+    port: 80
     targetPort: {{ .Values.service.port }}
     protocol: TCP
   selector:
