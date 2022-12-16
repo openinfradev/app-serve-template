@@ -1,0 +1,12 @@
+{{- if (hasKey .Values.config "content") }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}-config
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name }}
+data:
+  application.yml: |
+    {{ toYaml .Values.config.content | indent 4  }}
+{{- end }}
