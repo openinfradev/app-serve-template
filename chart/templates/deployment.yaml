@@ -17,7 +17,7 @@ spec:
     spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-    {{- if or (.Values.persistence.enabled) (hasKey .Values.config "content") (hasKey .Values.config "secretContent") }}
+    {{- if or (.Values.persistence.enabled) (.Values.config.configmap_enabled) (.Values.config.secret_enabled) }}
       volumes:
     {{- end }}
       {{- if .Values.persistence.enabled }}
@@ -25,12 +25,12 @@ spec:
           persistentVolumeClaim:
             claimName: {{ .Values.name }}-pvc
       {{- end }}
-      {{- if hasKey .Values.config "content" }}
+      {{- if .Values.config.configmap_enabled }}
         - name: config-cm
           configMap:
             name: {{ .Values.name }}-config
       {{- end }}
-      {{- if hasKey .Values.config "secretContent" }}
+      {{- if .Values.config.secret_enabled }}
         - name: config-secret
           secret:
             secretName: {{ .Values.name }}-secret
@@ -71,11 +71,11 @@ spec:
             - mountPath: {{ .Values.persistence.mountPath }}
               name: {{ .Values.name }}-pv
           {{- end }}
-          {{- if hasKey .Values.config "content" }}
+          {{- if .Values.config.configmap_enabled }}
             - name: config-cm
               mountPath: /config/
           {{- end }}
-          {{- if hasKey .Values.config "secretContent" }}
+          {{- if .Values.config.secret_enabled }}
             - name: config-secret
               mountPath: /config
           {{- end }}

@@ -10,19 +10,16 @@ config:
   profile: PROFILE
   executablePath: EXECUTABLE_PATH
   #####################
-  ## Contents of config in YAML
+  ## The configmap is created from file which is prepared
+  ## by 'serve-java-app'  workflow.
   ## By default, it's mounted into `/config/application.yml`,
   ## which can be used as default config or additional config.
-  # content: |-
-  #   spring:
-  #     database:
-  #     ...
-  content: "CONFIG_CONTENT"
+  configmap_enabled: CONFIGMAP_ENABLED
   #####################
-  ## An optional secret content in YAML format.
-  ## By default, it's mounted into `/config/secret.yml`.
-  # secretContent: |-
-  #   yourSecretContent
+  ## The secret is created from file which is prepared
+  ## by 'serve-java-app'  workflow.
+  ## By default, it's mounted into `/config/secret_content`.
+  secret_enabled: SECRET_ENABLED
 
 extraEnv: {}
   ## Extra environment variables to be injected

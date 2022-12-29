@@ -1,4 +1,4 @@
-{{- if (hasKey .Values.config "content") }}
+{{- if .Values.config.configmap_enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -8,5 +8,5 @@ metadata:
     app: {{ .Values.name }}
 data:
   application.yml: |
-    {{ toYaml .Values.config.content | indent 4  }}
+{{ .Files.Get "config_content.yaml" | indent 4  }}
 {{- end }}
