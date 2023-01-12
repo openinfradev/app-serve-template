@@ -18,7 +18,7 @@ config:
   #####################
   ## The secret is created from file which is prepared
   ## by 'serve-java-app'  workflow.
-  ## By default, it's mounted into `/config/secret_content`.
+  ## By default, it's mounted into `/secret/secret_data`.
   secret_enabled: SECRET_ENABLED
 
 extraEnv: {}
