@@ -1,0 +1,12 @@
+{{- if .Values.config.configmap_enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.name }}-config
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    app: {{ .Values.name }}
+data:
+  application.yml: |
+{{ .Files.Get "config_content.yaml" | indent 4  }}
+{{- end }}
