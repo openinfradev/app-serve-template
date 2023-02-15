@@ -1,0 +1,35 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollout-APP_NAME
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: APP_NAME
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: APP_NAME
+  strategy:
+    blueGreen: 
+      activeService: APP_NAME
+      previewService: APP_NAME-preview
+      autoPromotionEnabled: false
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: APP_NAME-preview
+spec:
+  selector:
+    app: APP_NAME
+  ports:
+  - protocol: TCP
+    name: web
+    port: 80
+    targetPort: PORT_NUM
+  type: LoadBalancer
