@@ -1,4 +1,5 @@
-FROM openjdk:11.0.15-jre-slim
+#FROM openjdk:11.0.15-jre-slim
+FROM openjdk:17.0.1-jdk
 
 ENV OTEL_METRICS_EXPORTER prometheus
 COPY FILENAME /usr/src/myapp/
