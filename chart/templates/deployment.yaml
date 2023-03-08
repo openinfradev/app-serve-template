@@ -41,7 +41,7 @@ spec:
             name: metrics
           command:
           - java
-          - -javaagent:/usr/src/myapp/opentelemetry-javaagent.jar
+          #- -javaagent:/usr/src/myapp/opentelemetry-javaagent.jar
           - -Dspring.profiles.active={{ .Values.config.profile }}
           - -XX:MinRAMPercentage=50.0
           - -XX:MaxRAMPercentage=75.0
