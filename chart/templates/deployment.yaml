@@ -62,6 +62,7 @@ spec:
           - -XX:MinRAMPercentage=50.0
           - -XX:MaxRAMPercentage=75.0
           - -XshowSettings:vm
+          - -Xshare:off
           - -jar
           - {{ .Values.config.executablePath }}
           resources:
