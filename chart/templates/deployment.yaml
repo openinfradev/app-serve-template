@@ -44,6 +44,8 @@ spec:
           env:
           - name: OTEL_METRICS_EXPORTER
             value: "prometheus"
+          - name: OTEL_TRACES_EXPORTER
+            value: "none"
         {{- range $key, $value := .Values.extraEnv }}
           - name: {{ $key }}
             value: {{ $value | quote }}
@@ -57,13 +59,12 @@ spec:
             name: metrics
           command:
           - java
-          - -javaagent:/usr/src/myapp/opentelemetry-javaagent.jar
           - -Dspring.profiles.active={{ .Values.config.profile }}
           - -XX:MinRAMPercentage=50.0
           - -XX:MaxRAMPercentage=75.0
           - -XshowSettings:vm
-          - -Xshare:off
           - -jar
+          - -javaagent:/usr/src/myapp/opentelemetry-javaagent.jar
           - {{ .Values.config.executablePath }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
