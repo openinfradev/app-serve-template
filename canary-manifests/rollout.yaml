@@ -2,10 +2,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: rollout-APP_NAME
+  name: APP_NAME
 spec:
-  replicas: 1
-  revisionHistoryLimit: 3
+  replicas: REPLICAS
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: APP_NAME
@@ -17,7 +17,7 @@ spec:
     blueGreen: 
       activeService: APP_NAME
       previewService: APP_NAME-preview
-      autoPromotionEnabled: false
+      autoPromotionEnabled: AUTO_PROMOTION
 
 ---
 kind: Service
