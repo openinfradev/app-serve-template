@@ -37,9 +37,6 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-rollout:
-  autoPromotionEnabled: AUTO_PROMOTION
-
 service:
   type: LoadBalancer
   port: PORT_NUM
