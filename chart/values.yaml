@@ -1,5 +1,5 @@
 name: APP_NAME
-namespace: APP_NAME
+namespace: APP_NAMESPACE
 replicas: 1
 
 image:
