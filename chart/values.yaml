@@ -1,5 +1,5 @@
 name: APP_NAME
-namespace: APP_NAME
+namespace: APP_NAMESPACE
 replicas: 1
 
 image:
@@ -36,6 +36,9 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+
+rollout:
+  autoPromotionEnabled: AUTO_PROMOTION
 
 service:
   type: LoadBalancer
